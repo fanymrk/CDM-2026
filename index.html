@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coupe du Monde FFCK Canoë Kayak Slalom – Vaires-sur-Marne 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b1e3d;
+    --water: #0a6fa8;
+    --cyan: #00d4f5;
+    --foam: #e8f8ff;
+    --white: #ffffff;
+    --gold: #f0b429;
+    --rock: #2c3e50;
+    --light: #f5f9fc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(11,30,61,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,212,245,0.15);
+  }
+  nav .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--cyan);
+  }
+  nav .logo span { color: var(--gold); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,0.75);
+    text-decoration: none; transition: color .2s;
+  }
+  nav ul a:hover { color: var(--cyan); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, #061422 0%, #0b3060 50%, #0a6fa8 100%);
+  }
+
+  /* Animated water waves SVG background */
+  .hero-waves {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    pointer-events: none;
+  }
+  .wave {
+    animation: waveAnim 6s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+  .wave2 { animation-delay: -2s; animation-duration: 8s; }
+  .wave3 { animation-delay: -4s; animation-duration: 10s; }
+  @keyframes waveAnim {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    50% { transform: translateX(-2%) scaleY(1.08); }
+  }
+
+  /* Diagonal accent line */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%; left: 60%;
+    width: 3px; height: 120%;
+    background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
+    transform: rotate(15deg);
+    opacity: 0.2;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 0 2rem;
+    animation: fadeUp .9s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    padding: 0.4rem 1.2rem; border-radius: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .9s ease .1s both;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+    animation: fadeUp .9s ease .2s both;
+  }
+  .hero h1 .line2 { color: var(--cyan); display: block; }
+  .hero h1 .line3 { color: var(--gold); font-size: 60%; display: block; }
+
+  .hero-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem; letter-spacing: 3px;
+    color: rgba(255,255,255,0.7);
+    margin: 1.5rem 0 2.5rem;
+    animation: fadeUp .9s ease .35s both;
+  }
+  .hero-date strong { color: var(--white); }
+
+  .hero-cta {
+    display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp .9s ease .5s both;
+  }
+  .btn {
+    display: inline-block; padding: 0.9rem 2.2rem;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none;
+    border-radius: 3px; cursor: pointer; border: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .btn-primary { background: var(--cyan); color: var(--navy); font-weight: 700; }
+  .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.5); }
+  .btn-gold { background: var(--gold); color: var(--navy); font-weight: 700; }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 3px;
+    color: rgba(255,255,255,0.4); text-transform: uppercase;
+    animation: bounceDown 2s ease infinite;
+  }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+  .scroll-indicator::after {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 0; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 2px; line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: #0d2240; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  .about-text p {
+    line-height: 1.8; color: rgba(255,255,255,0.75); margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  .about-text p strong { color: var(--cyan); }
+
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card {
+    background: rgba(0,212,245,0.07);
+    border: 1px solid rgba(0,212,245,0.2);
+    padding: 1.5rem; border-radius: 6px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--cyan); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem; letter-spacing: 1px;
+    color: rgba(255,255,255,0.6); text-transform: uppercase; margin-top: 0.3rem;
+  }
+
+  /* ── PROGRAMME ── */
+  .programme { background: var(--navy); }
+  .timeline { margin-top: 3rem; }
+  .day-block {
+    display: grid; grid-template-columns: 120px 1fr;
+    gap: 0; margin-bottom: 2rem;
+  }
+  .day-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; color: var(--gold);
+    padding-right: 2rem; padding-top: 0.2rem;
+    text-align: right;
+    border-right: 2px solid rgba(0,212,245,0.3);
+  }
+  .day-events {
+    padding-left: 2rem; display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .event-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid transparent;
+    padding: 0.8rem 1rem; border-radius: 0 4px 4px 0;
+    transition: border-color .2s, background .2s;
+  }
+  .event-item:hover { background: rgba(0,212,245,0.06); border-left-color: var(--cyan); }
+  .event-time {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; color: var(--cyan);
+    min-width: 70px; padding-top: 2px;
+  }
+  .event-desc { font-size: 0.95rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
+  .event-desc strong { color: var(--white); }
+  .badge {
+    display: inline-block; font-size: 0.65rem; letter-spacing: 1px;
+    text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 2px;
+    margin-left: 0.5rem; vertical-align: middle;
+  }
+  .badge-final { background: var(--gold); color: var(--navy); }
+  .badge-free  { background: rgba(0,212,245,0.25); color: var(--cyan); border: 1px solid var(--cyan); }
+
+  /* ── DISCIPLINES ── */
+  .disciplines { background: #0d2240; }
+  .disc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .disc-card {
+    background: rgba(0,212,245,0.05);
+    border: 1px solid rgba(0,212,245,0.15);
+    padding: 2rem 1.5rem; border-radius: 8px;
+    transition: transform .2s, border-color .2s;
+  }
+  .disc-card:hover { transform: translateY(-4px); border-color: var(--cyan); }
+  .disc-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .disc-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 1px; margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+  .disc-card p { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* ── LIEU ── */
+  .lieu { background: var(--navy); }
+  .lieu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .lieu-info p { line-height: 1.8; color: rgba(255,255,255,0.75); margin-bottom: 1rem; }
+  .lieu-info p strong { color: var(--cyan); }
+  .lieu-map {
+    background: rgba(0,212,245,0.05);
+    border: 1px solid rgba(0,212,245,0.2);
+    border-radius: 8px; overflow: hidden;
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lieu-map iframe { width: 100%; height: 100%; border: 0; }
+  .info-list { list-style: none; margin-top: 1.5rem; }
+  .info-list li {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.9rem; color: rgba(255,255,255,0.75);
+  }
+  .info-list li .icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  /* ── BENEVOLES ── */
+  .benevoles {
+    background: linear-gradient(135deg, #0a1f3a 0%, #0b3060 50%, #0a6fa8 100%);
+    position: relative; overflow: hidden;
+  }
+  .benevoles::before {
+    content: '';
+    position: absolute; top: -50%; right: -20%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,245,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .benv-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+  .benv-info h2 { margin-bottom: 1.5rem; }
+  .benv-info p { color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 1rem; }
+  .missions { margin-top: 2rem; }
+  .mission-item {
+    display: flex; gap: 1rem;
+    padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .mission-item .m-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .mission-item .m-text { font-size: 0.9rem; color: rgba(255,255,255,0.75); }
+  .mission-item .m-text strong { display: block; color: var(--white); margin-bottom: 0.2rem; }
+
+  /* ── FORM ── */
+  .form-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,212,245,0.25);
+    border-radius: 12px; padding: 2.5rem;
+    backdrop-filter: blur(8px);
+  }
+  .form-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 2px;
+    margin-bottom: 0.5rem; color: var(--cyan);
+  }
+  .form-card .form-sub {
+    font-size: 0.85rem; color: rgba(255,255,255,0.5);
+    margin-bottom: 2rem;
+  }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label {
+    display: block; font-size: 0.75rem; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    margin-bottom: 0.4rem; font-family: 'Space Mono', monospace;
+  }
+  input, select, textarea {
+    width: 100%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px; padding: 0.75rem 1rem;
+    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    transition: border-color .2s, background .2s;
+    outline: none; appearance: none;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.3); }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--cyan); background: rgba(0,212,245,0.07);
+  }
+  select option { background: #0b1e3d; color: var(--white); }
+  textarea { resize: vertical; min-height: 90px; }
+
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.5rem; }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.5rem 1rem; border-radius: 3px; cursor: pointer;
+    font-size: 0.85rem; color: rgba(255,255,255,0.7);
+    transition: border-color .2s, background .2s;
+  }
+  .checkbox-item:hover { border-color: var(--cyan); }
+  .checkbox-item input[type="checkbox"] {
+    width: auto; padding: 0; cursor: pointer;
+    accent-color: var(--cyan);
+  }
+  .checkbox-item.selected { border-color: var(--cyan); background: rgba(0,212,245,0.1); color: var(--white); }
+
+  .submit-btn {
+    width: 100%; padding: 1rem;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--cyan), #0091cc);
+    color: var(--navy); border: none; border-radius: 4px;
+    cursor: pointer; margin-top: 0.5rem;
+    transition: opacity .2s, transform .2s;
+  }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* Success message */
+  .success-msg {
+    display: none;
+    text-align: center; padding: 3rem 2rem;
+  }
+  .success-msg .checkmark { font-size: 4rem; margin-bottom: 1rem; }
+  .success-msg h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--cyan); margin-bottom: 0.5rem;
+  }
+  .success-msg p { color: rgba(255,255,255,0.7); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070f1e;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: 2px; color: var(--cyan);
+  }
+  .footer-logo span { color: var(--gold); }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer-links a:hover { color: var(--cyan); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .about-grid, .lieu-grid, .benv-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .disc-grid { grid-template-columns: 1fr; }
+    .day-block { grid-template-columns: 80px 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  /* Divider wave */
+  .wave-divider { overflow: hidden; line-height: 0; }
+  .wave-divider svg { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">VAIRES <span>2026</span></div>
+  <ul>
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="#disciplines">Disciplines</a></li>
+    <li><a href="#lieu">Le Site</a></li>
+    <li><a href="#benevoles">Bénévoles</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="hero-content">
+    <div class="hero-eyebrow">FFCK · Coupe du Monde · France</div>
+    <h1>
+      Coupe du<span class="line2">Monde</span>
+      <span class="line3">Canoë Kayak Slalom</span>
+    </h1>
+    <div class="hero-date"><strong>4 – 6 Septembre 2026</strong> · Vaires-sur-Marne</div>
+    <div class="hero-cta">
+      <a href="#programme" class="btn btn-primary">Voir le programme</a>
+      <a href="#benevoles" class="btn btn-gold">Devenir bénévole</a>
+      <a href="#lieu" class="btn btn-outline">Accès & Infos</a>
+    </div>
+  </div>
+
+  <!-- Animated wave background -->
+  <div class="hero-waves">
+    <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="320">
+      <path class="wave" fill="rgba(10,111,168,0.35)"
+        d="M0,192L48,197.3C96,203,192,213,288,202.7C384,192,480,160,576,165.3C672,171,768,213,864,213.3C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/>
+      <path class="wave wave2" fill="rgba(0,212,245,0.18)"
+        d="M0,256L60,245.3C120,235,240,213,360,213.3C480,213,600,235,720,240C840,245,960,235,1080,218.7C1200,203,1320,181,1380,170.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"/>
+      <path class="wave wave3" fill="rgba(11,30,61,0.9)"
+        d="M0,288L80,272C160,256,320,224,480,229.3C640,235,800,277,960,277.3C1120,277,1280,235,1360,213.3L1440,192L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"/>
+    </svg>
+  </div>
+
+  <div class="scroll-indicator">Défiler</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">À propos</div>
+        <h2 class="section-title">L'Élite Mondiale sur la Marne</h2>
+        <p>
+          Le <strong>Stade Nautique Olympique d'Île-de-France</strong> à Vaires-sur-Marne accueille en septembre 2026 une étape de la Coupe du Monde de Canoë Kayak Slalom organisée par la <strong>Fédération Française de Canoë Kayak (FFCK)</strong> — l'une des compétitions les plus prestigieuses du calendrier international.
+        </p>
+        <p>
+          Site des épreuves olympiques lors des <strong>Jeux de Paris 2024</strong>, ce stade de classe mondiale reçoit à nouveau les meilleurs pagayeurs de la planète, dans une ambiance festive et accessible à tous : <strong>entrée libre et gratuite</strong>.
+        </p>
+        <p>
+          Animations, rencontres avec les athlètes, village exposants, activités nautiques pour tous les publics… Trois jours de sport et de fête sur les rives de la Marne.
+        </p>
+        <div style="margin-top: 2rem;">
+          <a href="#benevoles" class="btn btn-primary" style="text-decoration:none;">Je veux participer →</a>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Nations représentées</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">250+</div>
+          <div class="stat-label">Athlètes en compétition</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Jours de compétition</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">150<span style="font-size:1.5rem">ha</span></div>
+          <div class="stat-label">Site olympique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section class="programme" id="programme">
+  <div class="container">
+    <div class="section-label">Calendrier</div>
+    <h2 class="section-title">Programme des 3 Jours</h2>
+
+    <div class="timeline">
+
+      <!-- Jour 1 -->
+      <div class="day-block">
+        <div class="day-label">VEN<br>4 SEPT</div>
+        <div class="day-events">
+          <div class="event-item">
+            <div class="event-time">08:00</div>
+            <div class="event-desc"><strong>Ouverture du site et accueil du public</strong><br>Village exposants, espaces partenaires</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">09:00</div>
+            <div class="event-desc"><strong>Entraînements officiels</strong> – Kayak & Canoë Slalom</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">10:00</div>
+            <div class="event-desc"><strong>Entraînements officiels</strong> – Kayak Cross
+              <span class="badge badge-free">Accès libre</span></div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">14:00</div>
+            <div class="event-desc"><strong>Qualifications – Slalom</strong> (K1H, K1F, C1H, C1F)<br>Séries de qualification sur le parcours olympique</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">18:00</div>
+            <div class="event-desc"><strong>Activités grand public</strong> – Initiation canoë kayak, SUP, yoga sur l'eau</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jour 2 -->
+      <div class="day-block">
+        <div class="day-label">SAM<br>5 SEPT</div>
+        <div class="day-events">
+          <div class="event-item">
+            <div class="event-time">09:00</div>
+            <div class="event-desc"><strong>Demi-finales Slalom</strong> – Toutes catégories</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">11:00</div>
+            <div class="event-desc"><strong>Qualifications Kayak Cross</strong> – Format éliminatoire spectaculaire</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">13:00</div>
+            <div class="event-desc"><strong>Animations & Village</strong> – Rencontres avec les athlètes, dédicaces, quiz sportif</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">15:00</div>
+            <div class="event-desc"><strong>Demi-finales Kayak Cross</strong> – Courses à 4 en simultané
+              <span class="badge badge-free">Entrée libre</span></div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">17:30</div>
+            <div class="event-desc"><strong>Conférence Jeunesse</strong> – Témoignages d'athlètes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jour 3 -->
+      <div class="day-block">
+        <div class="day-label">DIM<br>6 SEPT</div>
+        <div class="day-events">
+          <div class="event-item">
+            <div class="event-time">10:00</div>
+            <div class="event-desc"><strong>Finales Slalom</strong> – C1H · C1F · K1H · K1F
+              <span class="badge badge-final">Finale</span></div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">13:30</div>
+            <div class="event-desc"><strong>Finales Kayak Cross</strong> – Petite finale & Grande finale
+              <span class="badge badge-final">Finale</span></div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">15:30</div>
+            <div class="event-desc"><strong>Cérémonies de remise des médailles</strong> – Toutes disciplines</div>
+          </div>
+          <div class="event-item">
+            <div class="event-time">17:00</div>
+            <div class="event-desc"><strong>Clôture officielle</strong> – Fête sur les rives de la Marne
+              <span class="badge badge-free">Entrée libre</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DISCIPLINES -->
+<section class="disciplines" id="disciplines">
+  <div class="container">
+    <div class="section-label">Au programme</div>
+    <h2 class="section-title">Les Disciplines</h2>
+    <div class="disc-grid">
+      <div class="disc-card">
+        <div class="disc-icon">🛶</div>
+        <h3>Kayak Slalom – K1</h3>
+        <p>Hommes et femmes s'élancent en monoplace sur un parcours d'eau vive parsemé de portes. Technique, précision et puissance sont les maîtres mots de cette discipline olympique.</p>
+      </div>
+      <div class="disc-card">
+        <div class="disc-icon">🚣</div>
+        <h3>Canoë Slalom – C1</h3>
+        <p>Le pagayeur utilise une seule pagaie simple et navigue à genoux dans son embarcation. Une discipline d'une technicité extrême, née en France dès les années 1930.</p>
+      </div>
+      <div class="disc-card">
+        <div class="disc-icon">⚡</div>
+        <h3>Kayak Cross</h3>
+        <p>Quatre athlètes s'affrontent simultanément dans un format de course éliminatoire haletant. Le spectacle est garanti : contact, tactique et sprint final sur l'eau vive !</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIEU -->
+<section class="lieu" id="lieu">
+  <div class="container">
+    <div class="lieu-grid">
+      <div class="lieu-info">
+        <div class="section-label">Le Site</div>
+        <h2 class="section-title">Stade Nautique Olympique</h2>
+        <p>
+          Inauguré en 2019 et élu <strong>premier équipement olympique livré</strong> pour Paris 2024, le Stade Nautique Olympique d'Île-de-France est un site exceptionnel. Avec ses <strong>150 hectares</strong> et ses quatre rivières artificielles totalisant 800 mètres de longueur, c'est l'un des trois seuls stades au monde permettant d'organiser les trois épreuves olympiques de canoë kayak.
+        </p>
+        <ul class="info-list">
+          <li><span class="icon">📍</span>Boulevard des Nations Unies, 77360 Vaires-sur-Marne</li>
+          <li><span class="icon">🚇</span>RER E – Gare de Vaires-Torcy (15 min à pied)</li>
+          <li><span class="icon">🚗</span>A4 Sortie Lagny-sur-Marne / Torcy</li>
+          <li><span class="icon">🅿️</span>Parking gratuit sur site (capacité limitée)</li>
+          <li><span class="icon">🎟️</span>Entrée entièrement gratuite et libre</li>
+          <li><span class="icon">🍽️</span>Restauration et buvettes sur place</li>
+          <li><span class="icon">♿</span>Site entièrement accessible PMR</li>
+        </ul>
+      </div>
+      <div class="lieu-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.4!2d2.6528!3d48.8671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e60eb1234b4f5b%3A0x0!2sStade%20Nautique%20Olympique%20d'%C3%8Ele-de-France!5e0!3m2!1sfr!2sfr!4v1"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Stade Nautique Olympique Vaires-sur-Marne">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEVOLES -->
+<section class="benevoles" id="benevoles">
+  <div class="container">
+    <div class="benv-grid">
+
+      <!-- Info côté gauche -->
+      <div class="benv-info">
+        <div class="section-label">Rejoindre l'équipe</div>
+        <h2 class="section-title">Devenez Bénévole !</h2>
+        <p>
+          La Coupe du Monde de Vaires-sur-Marne, c'est avant tout une grande aventure humaine. Pour que cet événement soit une réussite, nous avons besoin de <strong>bénévoles motivés</strong> du 4 au 6 septembre 2026.
+        </p>
+        <p>
+          Rejoindre l'équipe, c'est vivre la compétition de l'intérieur, côtoyer les meilleurs athlètes mondiaux et contribuer au rayonnement du canoë kayak en France.
+        </p>
+
+        <div class="missions">
+          <div class="mission-item">
+            <div class="m-icon">🏅</div>
+            <div class="m-text">
+              <strong>Accueil & Parcours</strong>
+              Accueil des spectateurs, signalétique sur le site, orientation et information du public.
+            </div>
+          </div>
+          <div class="mission-item">
+            <div class="m-icon">⏱️</div>
+            <div class="m-text">
+              <strong>Chronométrage & Résultats</strong>
+              Assistance technique aux officiels pour la gestion des résultats et le chronométrage.
+            </div>
+          </div>
+          <div class="mission-item">
+            <div class="m-icon">🎉</div>
+            <div class="m-text">
+              <strong>Animations & Village</strong>
+              Animation des espaces publics, accueil des groupes scolaires, coordination des activités.
+            </div>
+          </div>
+          <div class="mission-item">
+            <div class="m-icon">📸</div>
+            <div class="m-text">
+              <strong>Communication & Réseaux</strong>
+              Création de contenu, photos & vidéos, gestion des réseaux sociaux de l'événement.
+            </div>
+          </div>
+          <div class="mission-item">
+            <div class="m-icon">🛶</div>
+            <div class="m-text">
+              <strong>Secours Nautique</strong>
+              (Diplôme nautique requis) Sécurité sur l'eau, récupération de matériel.
+            </div>
+          </div>
+          <div class="mission-item">
+            <div class="m-icon">🍽️</div>
+            <div class="m-text">
+              <strong>Logistique & Restauration</strong>
+              Gestion des stocks, approvisionnement, support aux équipes techniques.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire -->
+      <div class="form-card" id="form-container">
+        <div id="form-content">
+          <h3>Inscription Bénévole</h3>
+          <p class="form-sub">Remplissez ce formulaire et nous vous recontacterons rapidement.</p>
+
+          <div style="background: rgba(240,180,41,0.1); border: 1px solid rgba(240,180,41,0.4); border-radius: 6px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; display: flex; gap: 0.7rem; align-items: flex-start;">
+            <span style="font-size:1.1rem; flex-shrink:0;">ℹ️</span>
+            <p style="font-size: 0.83rem; color: rgba(255,255,255,0.75); line-height: 1.6; margin:0;">
+              <strong style="color: var(--gold);">Important :</strong> Remplir ce formulaire ne garantit pas votre acceptation comme bénévole. Votre candidature sera étudiée par l'équipe organisatrice, qui vous contactera par email pour vous confirmer votre sélection ou non.
+            </p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prenom">Prénom *</label>
+              <input type="text" id="prenom" placeholder="Marie" required>
+            </div>
+            <div class="form-group">
+              <label for="nom">Nom *</label>
+              <input type="text" id="nom" placeholder="Dupont" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" placeholder="marie.dupont@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input type="tel" id="tel" placeholder="06 12 34 56 78">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age">Âge</label>
+              <input type="number" id="age" placeholder="25" min="16" max="99">
+            </div>
+            <div class="form-group">
+              <label for="ville">Ville</label>
+              <input type="text" id="ville" placeholder="Vaires-sur-Marne">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Disponibilité *</label>
+            <div class="checkbox-group" id="dispo-group">
+              <label class="checkbox-item" onclick="toggleCheck(this)">
+                <input type="checkbox" value="vendredi"> Vendredi 4 sept.
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this)">
+                <input type="checkbox" value="samedi"> Samedi 5 sept.
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this)">
+                <input type="checkbox" value="dimanche"> Dimanche 6 sept.
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this)">
+                <input type="checkbox" value="tout"> Les 3 jours
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mission">Mission souhaitée</label>
+            <select id="mission">
+              <option value="">-- Choisir une mission --</option>
+              <option>Accueil & Parcours</option>
+              <option>Chronométrage & Résultats</option>
+              <option>Animations & Village</option>
+              <option>Communication & Réseaux Sociaux</option>
+              <option>Secours Nautique (diplôme requis)</option>
+              <option>Logistique & Restauration</option>
+              <option>Pas de préférence</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="experience">Expérience bénévolat / Compétences particulières</label>
+            <textarea id="experience" placeholder="Ex : bénévole JO Paris 2024, diplôme BPJEPS canoë, maîtrise de l'anglais..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-item" style="width:100%; border-color: rgba(255,255,255,0.12);" onclick="toggleCheck(this)">
+              <input type="checkbox" id="rgpd" value="ok">
+              J'accepte que mes données soient utilisées dans le cadre de l'organisation de cet événement.
+            </label>
+          </div>
+
+          <button class="submit-btn" onclick="soumettre()">S'INSCRIRE COMME BÉNÉVOLE</button>
+        </div>
+
+        <!-- Message succès -->
+        <div class="success-msg" id="success-msg">
+          <div class="checkmark">✅</div>
+          <h3>Candidature envoyée !</h3>
+          <p>Merci pour votre intérêt et votre enthousiasme !<br><br>
+          Votre candidature a bien été reçue par l'équipe organisatrice. <strong>Celle-ci étudiera votre dossier</strong> et vous contactera par email dans les prochaines semaines pour vous confirmer si votre candidature est retenue ou non.<br><br>
+          À très bientôt, peut-être, sur les rives de la Marne ! 🛶</p>
+          <br>
+          <a href="#accueil" class="btn btn-outline" style="text-decoration:none;">Retour à l'accueil</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">VAIRES <span>2026</span></div>
+        <p style="margin-top:0.5rem;">FFCK · Coupe du Monde Canoë Kayak Slalom · 4–6 Septembre 2026</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.ffck.org" target="_blank">FFCK</a>
+        <a href="#benevoles">Bénévoles</a>
+      </div>
+      <p>© 2026 Fédération Française de Canoë Kayak · Tous droits réservés</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Toggle checkbox styles
+  function toggleCheck(label) {
+    setTimeout(() => {
+      const cb = label.querySelector('input[type="checkbox"]');
+      if (cb.checked) label.classList.add('selected');
+      else label.classList.remove('selected');
+    }, 0);
+  }
+
+  // Form submission
+  function soumettre() {
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const rgpd = document.getElementById('rgpd').checked;
+
+    const dispos = [...document.querySelectorAll('#dispo-group input:checked')];
+
+    if (!prenom || !nom) { alert('Merci de renseigner votre prénom et nom.'); return; }
+    if (!email || !email.includes('@')) { alert('Merci de renseigner un email valide.'); return; }
+    if (dispos.length === 0) { alert('Merci d\'indiquer vos disponibilités.'); return; }
+    if (!rgpd) { alert('Merci d\'accepter la politique de confidentialité.'); return; }
+
+    // Show success
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+
+    // Scroll to success
+    document.getElementById('form-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Animate stats on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.style.opacity = '1';
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.stat-card, .disc-card, .event-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity .5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
